@@ -7,6 +7,148 @@ end
 repeat task.wait() until game:IsLoaded()
     setfpscap(3)
 
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.IgnoreGuiInset = true
+screenGui.ResetOnSpawn = false
+
+local backgroundFrame = Instance.new("Frame")
+backgroundFrame.Size = UDim2.new(1, 0, 1, 0)
+backgroundFrame.Position = UDim2.new(0, 0, 0, 0)
+backgroundFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+backgroundFrame.Parent = screenGui
+
+local thingy = Instance.new("TextLabel")
+thingy.Size = UDim2.new(0, 200, 0, 50)
+thingy.Position = UDim2.new(0.5, -100, 0.5, -125)
+thingy.BackgroundTransparency = 1
+thingy.Text = "george droyd fent reactor"
+thingy.TextColor3 = Color3.new(1, 1, 1)
+thingy.TextScaled = true
+thingy.Font = Enum.Font.SourceSansBold
+thingy.Parent = screenGui
+
+local timerLabel = Instance.new("TextLabel")
+timerLabel.Size = UDim2.new(0, 200, 0, 50)
+timerLabel.Position = UDim2.new(0.5, -100, 0.5, -75)
+timerLabel.BackgroundTransparency = 1
+timerLabel.Text = "00:00:00"
+timerLabel.TextColor3 = Color3.new(1, 1, 1)
+timerLabel.TextScaled = true
+timerLabel.Font = Enum.Font.SourceSansBold
+timerLabel.Parent = screenGui
+
+local lootboxCounterLabel = Instance.new("TextLabel")
+lootboxCounterLabel.Size = UDim2.new(0, 200, 0, 50)
+lootboxCounterLabel.Position = UDim2.new(0.5, -100, 0.5, -25)
+lootboxCounterLabel.BackgroundTransparency = 1
+lootboxCounterLabel.Text = "Lootbox Gifts: 0"
+lootboxCounterLabel.TextColor3 = Color3.new(1, 1, 1)
+lootboxCounterLabel.TextScaled = true
+lootboxCounterLabel.Font = Enum.Font.SourceSansBold
+lootboxCounterLabel.Parent = screenGui
+
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Function to count "2025 New Years Gift" items in Lootbox inventory
+local clientSave = require(library:WaitForChild("Client").Save).Get()
+
+function getLootboxGifts()
+    local count = 0
+    for i, v in pairs(clientSave["Inventory"]["Lootbox"] or {}) do
+        if v.id == "2025 New Years Gift" then
+            count += 1
+        end
+    end
+    return count
+end
+
+-- Timer and Lootbox Gifts Counter Update
+local startTime = os.time()
+while true do
+    local elapsedTime = os.time() - startTime
+    local hours = math.floor(elapsedTime / 3600)
+    local minutes = math.floor((elapsedTime % 3600) / 60)
+    local seconds = elapsedTime % 60
+
+    -- Update timer
+    timerLabel.Text = string.format("%02d:%02d:%02d", hours, minutes, seconds)
+    -- Update lootbox gift count
+    lootboxCounterLabel.Text = "Lootbox Gifts: " .. tostring(getLootboxGifts())
+
+    task.wait(1)
+end
+local screenGui = Instance.new("ScreenGui")
+screenGui.IgnoreGuiInset = true
+screenGui.ResetOnSpawn = false
+
+local backgroundFrame = Instance.new("Frame")
+backgroundFrame.Size = UDim2.new(1, 0, 1, 0)
+backgroundFrame.Position = UDim2.new(0, 0, 0, 0)
+backgroundFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+backgroundFrame.Parent = screenGui
+
+local thingy = Instance.new("TextLabel")
+thingy.Size = UDim2.new(0, 200, 0, 50)
+thingy.Position = UDim2.new(0.5, -100, 0.5, -125)
+thingy.BackgroundTransparency = 1
+thingy.Text = "george droyd fent reactor"
+thingy.TextColor3 = Color3.new(1, 1, 1)
+thingy.TextScaled = true
+thingy.Font = Enum.Font.SourceSansBold
+thingy.Parent = screenGui
+
+local timerLabel = Instance.new("TextLabel")
+timerLabel.Size = UDim2.new(0, 200, 0, 50)
+timerLabel.Position = UDim2.new(0.5, -100, 0.5, -75)
+timerLabel.BackgroundTransparency = 1
+timerLabel.Text = "00:00:00"
+timerLabel.TextColor3 = Color3.new(1, 1, 1)
+timerLabel.TextScaled = true
+timerLabel.Font = Enum.Font.SourceSansBold
+timerLabel.Parent = screenGui
+
+local lootboxCounterLabel = Instance.new("TextLabel")
+lootboxCounterLabel.Size = UDim2.new(0, 200, 0, 50)
+lootboxCounterLabel.Position = UDim2.new(0.5, -100, 0.5, -25)
+lootboxCounterLabel.BackgroundTransparency = 1
+lootboxCounterLabel.Text = "Lootbox Gifts: 0"
+lootboxCounterLabel.TextColor3 = Color3.new(1, 1, 1)
+lootboxCounterLabel.TextScaled = true
+lootboxCounterLabel.Font = Enum.Font.SourceSansBold
+lootboxCounterLabel.Parent = screenGui
+
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Function to count "2025 New Years Gift" items in Lootbox inventory
+local clientSave = require(library:WaitForChild("Client").Save).Get()
+
+function getLootboxGifts()
+    local count = 0
+    for i, v in clientSave["Inventory"]["Lootbox"] do
+        if v.id ~= "2025 New Years Gift" then continue end
+        count += 1
+    end
+    return count
+end
+
+-- Timer and Lootbox Gifts Counter Update
+local startTime = os.time()
+while true do
+    local elapsedTime = os.time() - startTime
+    local hours = math.floor(elapsedTime / 3600)
+    local minutes = math.floor((elapsedTime % 3600) / 60)
+    local seconds = elapsedTime % 60
+
+    -- Update timer
+    timerLabel.Text = string.format("%02d:%02d:%02d", hours, minutes, seconds)
+    -- Update lootbox gift count
+    lootboxCounterLabel.Text = "Lootbox Gifts: " .. getLootboxGifts()
+
+    task.wait(1)
+end
+
+
 local function LowGraphics()
     pcall(function()
         Lighting = game:GetService("Lighting")
@@ -203,75 +345,3 @@ end)
 
     
 Optimizer()
-
-
-local screenGui = Instance.new("ScreenGui")
-screenGui.IgnoreGuiInset = true
-screenGui.ResetOnSpawn = false
-
-local backgroundFrame = Instance.new("Frame")
-backgroundFrame.Size = UDim2.new(1, 0, 1, 0)
-backgroundFrame.Position = UDim2.new(0, 0, 0, 0)
-backgroundFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-backgroundFrame.Parent = screenGui
-
-local thingy = Instance.new("TextLabel")
-thingy.Size = UDim2.new(0, 200, 0, 50)
-thingy.Position = UDim2.new(0.5, -100, 0.5, -125)
-thingy.BackgroundTransparency = 1
-thingy.Text = "george droyd fent reactor"
-thingy.TextColor3 = Color3.new(1, 1, 1)
-thingy.TextScaled = true
-thingy.Font = Enum.Font.SourceSansBold
-thingy.Parent = screenGui
-
-local timerLabel = Instance.new("TextLabel")
-timerLabel.Size = UDim2.new(0, 200, 0, 50)
-timerLabel.Position = UDim2.new(0.5, -100, 0.5, -75)
-timerLabel.BackgroundTransparency = 1
-timerLabel.Text = "00:00:00"
-timerLabel.TextColor3 = Color3.new(1, 1, 1)
-timerLabel.TextScaled = true
-timerLabel.Font = Enum.Font.SourceSansBold
-timerLabel.Parent = screenGui
-
-local lootboxCounterLabel = Instance.new("TextLabel")
-lootboxCounterLabel.Size = UDim2.new(0, 200, 0, 50)
-lootboxCounterLabel.Position = UDim2.new(0.5, -100, 0.5, -25)
-lootboxCounterLabel.BackgroundTransparency = 1
-lootboxCounterLabel.Text = "Lootbox Gifts: 0"
-lootboxCounterLabel.TextColor3 = Color3.new(1, 1, 1)
-lootboxCounterLabel.TextScaled = true
-lootboxCounterLabel.Font = Enum.Font.SourceSansBold
-lootboxCounterLabel.Parent = screenGui
-
-screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-
--- Function to count "2025 New Years Gift" items in Lootbox inventory
-local clientSave = require(library:WaitForChild("Client").Save).Get()
-
-function getLootboxGifts()
-    local count = 0
-    for i, v in clientSave["Inventory"]["Lootbox"] do
-        if v.id ~= "2025 New Years Gift" then continue end
-        count += 1
-    end
-    return count
-end
-
--- Timer and Lootbox Gifts Counter Update
-local startTime = os.time()
-while true do
-    local elapsedTime = os.time() - startTime
-    local hours = math.floor(elapsedTime / 3600)
-    local minutes = math.floor((elapsedTime % 3600) / 60)
-    local seconds = elapsedTime % 60
-
-    -- Update timer
-    timerLabel.Text = string.format("%02d:%02d:%02d", hours, minutes, seconds)
-    -- Update lootbox gift count
-    lootboxCounterLabel.Text = "Lootbox Gifts: " .. getLootboxGifts()
-
-    task.wait(1)
-end
-
