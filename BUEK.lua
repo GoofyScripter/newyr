@@ -7,9 +7,8 @@ end
 repeat task.wait() until game:IsLoaded()
     setfpscap(3)
 
-task.wait(10)
-
 local function LowGraphics()
+    task.wait(10)
     pcall(function()
         Lighting = game:GetService("Lighting")
         local Terrain = workspace:FindFirstChildOfClass('Terrain')
