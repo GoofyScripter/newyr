@@ -267,8 +267,11 @@ while true do
     local minutes = math.floor((elapsedTime % 3600) / 60)
     local seconds = elapsedTime % 60
 
+    -- Update timer
     timerLabel.Text = string.format("%02d:%02d:%02d", hours, minutes, seconds)
+    -- Update lootbox gift count
     lootboxCounterLabel.Text = "Lootbox Gifts: " .. getLootboxGifts()
 
     task.wait(1)
 end
+
