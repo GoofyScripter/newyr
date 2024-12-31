@@ -7,7 +7,7 @@ end
 repeat task.wait() until game:IsLoaded()
     setfpscap(3)
 
-task.wait(8)
+task.wait(10)
 
 local function LowGraphics()
     pcall(function()
