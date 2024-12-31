@@ -4,6 +4,8 @@ while game.PlaceId ~= 15502339080 do
     game:GetService("TeleportService"):Teleport(15502339080, game.Players.LocalPlayer)
 end
 
+task.wait(5)
+
 repeat task.wait() until game:IsLoaded()
     setfpscap(3)
 
