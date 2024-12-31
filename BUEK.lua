@@ -195,12 +195,23 @@ end)
 
 repeat task.wait() until game:IsLoaded()
 
-local vu = game:GetService("VirtualUser")
+--Anti AFK
 game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
-game:GetService("Players").LocalPlayer.Idled:Connect(function()
-    vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-    vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+local vu = game:GetService("VirtualUser")
+game:GetService('Players').LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0),Workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    vu:Button2Up(Vector2.new(0,0),Workspace.CurrentCamera.Frame)
 end)
+local old 
+old = hookmetamethod(game,"__namecall",(function(...) 
+    local self,arg = ...
+    if not checkcaller() then 
+        if tostring(self) == "__BLUNDER" or tostring(self) == "Idle Tracking: Update Timer" or tostring(self) == "Move Server" then return end
+    end
+    return old(...)
+end))
+game.ReplicatedStorage.Network["Idle Tracking: Stop Timer"]:FireServer()
 
 setfpscap(3)
 
