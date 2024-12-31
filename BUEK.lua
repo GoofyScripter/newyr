@@ -7,7 +7,8 @@ end
 repeat task.wait() until game:IsLoaded()
     setfpscap(3)
 
-task.wait(5)
+task.wait(8)
+
 local function LowGraphics()
     pcall(function()
         Lighting = game:GetService("Lighting")
